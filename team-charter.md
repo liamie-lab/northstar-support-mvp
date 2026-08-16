@@ -3,7 +3,7 @@ Project: Northstar Sprint Team Charter - Guide
 Planning date: Friday 14th August 2026
 Assumed Deadline: Sunday 16th August 2026
 Team Name Ganadora
-Team size 4
+Team size 5
 Known Submission Channel: Google Forms
 Purpose: To establish how our 5-person team will build and document an MVP that addresses Northstar Retail Co’s repetitive customer support problems
 Team Members’ Roles and Responsibilities
