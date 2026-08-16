@@ -78,6 +78,6 @@ Member Name        Agreement Date  Signatory
 1 Michelle Mwikali         14/8/2026   Michelle   
 2 Albeshem Kibet           14/8/2026  
 3 Peter Nyirongo            14/8/2026   Peter
-4 Lee Atandi                    14/8/2026   Lee        
-5 Monica Isika                 14th/8/2026  Monica       
+4 Lee Atandi                14/8/2026   Lee        
+5 Monica Isika              14th/8/2026  Monica       
  
