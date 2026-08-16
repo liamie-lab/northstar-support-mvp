@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Northstar Retail Co. | Returns & Refunds</title>
+
+  <!--
+    Northstar Retail Co.
+    Returns & Refunds MVP
+    Task #10
+
+    External files:
+    CSS  -> css/styles.css
+    JS   -> js/app.js
+  -->
+
+  <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header>
+    <div class="header-inner">
+
+      <div>
+        <p class="eyebrow">Northstar Retail Co.</p>
+
+        <h1>Returns &amp; Refunds</h1>
+
+        <p class="subtitle">
+          Support Deflection MVP page for Task #10. This page collects the required
+          return questions, provides refund status controls, and includes escalation
+          paths for edge cases.
+        </p>
+      </div>
+
+      <span class="badge">MVP Prototype</span>
+
+    </div>
+  </header>
+
+  <main id="main">
+
+    <div class="card">
+
+      <!-- TAB NAVIGATION -->
+      <div
+        class="tabs"
+        role="tablist"
+        aria-label="Returns and refund options"
+      >
+
+        <button
+          type="button"
+          role="tab"
+          id="tab-return"
+          aria-selected="true"
+          aria-controls="panel-return"
+          tabindex="0"
+        >
+          Start a return
+        </button>
+
+        <button
+          type="button"
+          role="tab"
+          id="tab-refund"
+          aria-selected="false"
+          aria-controls="panel-refund"
+          tabindex="-1"
+        >
+          Check refund status
+        </button>
+
+      </div>
+
+
+      <!-- =========================================================
+           START RETURN PANEL
+           ========================================================= -->
+
+      <section
+        id="panel-return"
+        role="tabpanel"
+        aria-labelledby="tab-return"
+        tabindex="0"
+      >
+
+        <form id="returnForm" novalidate>
+
+          <!-- STEP 1 -->
+          <fieldset>
+
+            <legend>Step 1: Find your order</legend>
+
+            <div class="grid two">
+
+              <div>
+
+                <label for="returnOrderNumber">
+                  Order number
+                </label>
+
+                <input
+                  id="returnOrderNumber"
+                  name="orderNumber"
+                  type="text"
+                  autocomplete="off"
+                  placeholder="NS-1001"
+                  required
+                  aria-describedby="returnLookupHint"
+                />
+
+              </div>
+
+              <div>
+
+                <label for="returnEmail">
+                  Email address
+                </label>
+
+                <input
+                  id="returnEmail"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="customer@example.com"
+                  required
+                />
+
+              </div>
+
+            </div>
+
+            <p id="returnLookupHint" class="hint">
+              Demo orders:
+              <strong>NS-1001</strong> eligible delivery,
+              <strong>NS-1002</strong> outside standard window,
+              <strong>NS-1003</strong> cancelled order with refund.
+            </p>
+
+            <div class="actions">
+
+              <button
+                type="button"
+                id="lookupOrderBtn"
+                class="primary"
+              >
+                Find order
+              </button>
+
+            </div>
+
+            <div
+              id="lookupError"
+              class="alert error"
+              role="alert"
+              hidden
+            ></div>
+
+          </fieldset>
+
+
+          <!-- ORDER SUMMARY -->
+          <div id="orderSummary" hidden>
+
+            <fieldset>
+
+              <legend>Order summary</legend>
+
+              <dl class="summary-grid">
+
+                <div>
+                  <dt>Order</dt>
+                  <dd id="summaryOrderNumber"></dd>
+                </div>
+
+                <div>
+                  <dt>Status</dt>
+                  <dd id="summaryOrderStatus"></dd>
+                </div>
+
+                <div>
+                  <dt>Delivered</dt>
+                  <dd id="summaryDeliveredDate"></dd>
+                </div>
+
+                <div>
+                  <dt>Return window</dt>
+                  <dd id="summaryReturnWindow"></dd>
+                </div>
+
+              </dl>
+
+              <div
+                id="orderStatusAlert"
+                class="alert info"
+                role="status"
+                hidden
+              ></div>
+
+
+              <!-- ITEM SELECTION -->
+              <div id="itemSelection" hidden>
+
+                <fieldset class="nested">
+
+                  <legend>
+                    Step 2: Select the item or items to return
+                  </legend>
+
+                  <div
+                    id="itemList"
+                    class="item-grid"
+                  ></div>
+
+                </fieldset>
+
+              </div>
+
+            </fieldset>
+
+
+            <!-- RETURN QUESTIONS -->
+            <div id="returnDetails" hidden>
+
+              <fieldset>
+
+                <legend>
+                  Step 3: Answer the return questions
+                </legend>
+
+
+                <div class="grid two">
+
+                  <div>
+
+                    <label for="returnReason">
+                      Why are you returning the item?
+                    </label>
+
+                    <select id="returnReason" required>
+
+                      <option value="">
+                        Select a reason
+                      </option>
+
+                      <option value="changed_mind">
+                        Changed mind / no longer needed
+                      </option>
+
+                      <option value="wrong_size_color">
+                        Wrong size, fit, or color
+                      </option>
+
+                      <option value="damaged_defective">
+                        Item is damaged or defective
+                      </option>
+
+                      <option value="wrong_item">
+                        Wrong item received
+                      </option>
+
+                      <option value="other">
+                        Other
+                      </option>
+
+                    </select>
+
+                  </div>
+
+
+                  <div>
+
+                    <label for="resolution">
+                      Preferred resolution
+                    </label>
+
+                    <select id="resolution" required>
+
+                      <option value="">
+                        Select resolution
+                      </option>
+
+                      <option value="original_payment">
+                        Refund to original payment method
+                      </option>
+
+                      <option value="store_credit">
+                        Store credit, if available
+                      </option>
+
+                    </select>
+
+                  </div>
+
+                </div>
+
+
+                <!-- CONDITION -->
+                <fieldset class="nested">
+
+                  <legend>
+                    What is the item condition?
+                  </legend>
+
+                  <div class="choice-list">
+
+                    <label>
+                      <input
+                        type="radio"
+                        name="condition"
+                        value="unused_original"
+                        required
+                      />
+                      Unused with original packaging and tags
+                    </label>
+
+                    <label>
+                      <input
+                        type="radio"
+                        name="condition"
+                        value="used_or_opened"
+                      />
+                      Used, opened, or missing tags
+                    </label>
+
+                    <label>
+                      <input
+                        type="radio"
+                        name="condition"
+                        value="arrived_damaged"
+                      />
+                      Arrived damaged or defective
+                    </label>
+
+                    <label>
+                      <input
+                        type="radio"
+                        name="condition"
+                        value="wrong_item_received"
+                      />
+                      Wrong item received
+                    </label>
+
+                    <label>
+                      <input
+                        type="radio"
+                        name="condition"
+                        value="missing_parts"
+                      />
+                      Missing parts or accessories
+                    </label>
+
+                  </div>
+
+                </fieldset>
+
+
+                <!-- PHOTO UPLOAD -->
+                <div id="photoUpload" hidden>
+
+                  <label for="photos">
+                    Upload photos of damage, defect, or wrong item
+                  </label>
+
+                  <input
+                    id="photos"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                  />
+
+                  <p
+                    id="photoList"
+                    class="hint"
+                  ></p>
+
+                </div>
+
+
+                <!-- RETURN METHOD -->
+                <fieldset class="nested">
+
+                  <legend>
+                    Return method
+                  </legend>
+
+                  <div class="choice-list">
+
+                    <label>
+                      <input
+                        type="radio"
+                        name="returnMethod"
+                        value="mail"
+                        required
+                      />
+                      Prepaid mail label
+                    </label>
+
+                    <label>
+                      <input
+                        type="radio"
+                        name="returnMethod"
+                        value="dropoff"
+                      />
+                      Drop-off location, if available
+                    </label>
+
+                  </div>
+
+                </fieldset>
+
+
+                <!-- COMMENTS -->
+                <div class="form-section">
+
+                  <label for="comments">
+                    Additional details
+                  </label>
+
+                  <textarea
+                    id="comments"
+                    rows="4"
+                    placeholder="Example: The zipper arrived broken, or I need a size large instead."
+                  ></textarea>
+
+                </div>
+
+
+                <!-- POLICY CONFIRMATION -->
+                <label class="checkbox">
+
+                  <input
+                    type="checkbox"
+                    id="policyConfirm"
+                    required
+                  />
+
+                  I confirm the information above is accurate and I understand
+                  the Northstar return policy.
+
+                </label>
+
+              </fieldset>
+
+
+              <!-- ACTIONS -->
+              <div class="actions">
+
+                <button
+                  type="submit"
+                  class="primary"
+                >
+                  Start return
+                </button>
+
+                <button
+                  type="button"
+                  id="resetReturnBtn"
+                  class="secondary"
+                >
+                  Reset form
+                </button>
+
+                <button
+                  type="button"
+                  id="escalateReturnBtn"
+                  class="secondary"
+                  hidden
+                >
+                  Talk to support
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div
+            id="returnFormAlert"
+            class="alert"
+            role="alert"
+            hidden
+          ></div>
+
+          <div
+            id="returnEscalation"
+            class="alert warning"
+            role="status"
+            hidden
+          ></div>
+
+        </form>
+
+
+        <!-- RETURN RESULT -->
+        <div
+          id="returnResult"
+          class="alert success"
+          role="status"
+          hidden
+        ></div>
+
+
+        <!-- AUDIT -->
+        <details
+          id="returnAudit"
+          hidden
+        >
+
+          <summary>
+            Decision audit for QA and board traceability
+          </summary>
+
+          <pre id="returnAuditBody"></pre>
+
+        </details>
+
+      </section>
+
+
+      <!-- =========================================================
+           REFUND STATUS PANEL
+           ========================================================= -->
+
+      <section
+        id="panel-refund"
+        role="tabpanel"
+        aria-labelledby="tab-refund"
+        tabindex="0"
+        hidden
+      >
+
+        <form
+          id="refundLookupForm"
+          novalidate
+        >
+
+          <fieldset>
+
+            <legend>
+              Check refund status
+            </legend>
+
+            <div class="grid two">
+
+              <div>
+
+                <label for="refundOrderNumber">
+                  Order number
+                </label>
+
+                <input
+                  id="refundOrderNumber"
+                  name="refundOrderNumber"
+                  type="text"
+                  autocomplete="off"
+                  placeholder="NS-1001"
+                  required
+                  aria-describedby="refundLookupHint"
+                />
+
+              </div>
+
+              <div>
+
+                <label for="refundEmail">
+                  Email address
+                </label>
+
+                <input
+                  id="refundEmail"
+                  name="refundEmail"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="customer@example.com"
+                  required
+                />
+
+              </div>
+
+            </div>
+
+            <p
+              id="refundLookupHint"
+              class="hint"
+            >
+              Demo refund records:
+              <strong>NS-1001</strong> return received and inspection pending,
+              <strong>NS-1003</strong> refund issued.
+            </p>
+
+            <div class="actions">
+
+              <button
+                type="button"
+                id="refundLookupBtn"
+                class="primary"
+              >
+                Check refund
+              </button>
+
+            </div>
+
+          </fieldset>
+
+
+          <div
+            id="refundLookupError"
+            class="alert error"
+            role="alert"
+            hidden
+          ></div>
+
+
+          <!-- NO REFUND RECORD -->
+          <div
+            id="refundNoRecord"
+            class="alert info"
+            role="status"
+            hidden
+          >
+
+            <p
+              id="refundNoRecordText"
+              class="no-margin"
+            ></p>
+
+            <button
+              type="button"
+              id="goStartReturnBtn"
+              class="secondary"
+            >
+              Start a return instead
+            </button>
+
+          </div>
+
+
+          <!-- REFUND RESULT -->
+          <div
+            id="refundResult"
+            hidden
+          >
+
+            <fieldset>
+
+              <legend>
+                Refund status
+              </legend>
+
+              <dl class="summary-grid">
+
+                <div>
+                  <dt>Return / refund reference</dt>
+                  <dd id="refundId"></dd>
+                </div>
+
+                <div>
+                  <dt>Status</dt>
+                  <dd id="refundStatusMessage"></dd>
+                </div>
+
+                <div>
+                  <dt>Refund amount</dt>
+                  <dd id="refundAmount"></dd>
+                </div>
+
+                <div>
+                  <dt>Refund method</dt>
+                  <dd id="refundMethod"></dd>
+                </div>
+
+              </dl>
+
+
+              <!-- TIMELINE -->
+              <ol
+                id="refundTimeline"
+                class="timeline"
+                aria-label="Refund progress timeline"
+              ></ol>
+
+
+              <p
+                id="refundSla"
+                class="hint"
+              ></p>
+
+
+              <div class="actions">
+
+                <button
+                  type="button"
+                  id="refundNotReceivedBtn"
+                  class="secondary"
+                >
+                  Refund not received?
+                </button>
+
+                <button
+                  type="button"
+                  id="refundEscalateBtn"
+                  class="secondary"
+                >
+                  Talk to support
+                </button>
+
+              </div>
+
+            </fieldset>
+
+
+            <div
+              id="refundEscalation"
+              class="alert warning"
+              role="status"
+              hidden
+            ></div>
+
+          </div>
+
+        </form>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer>
+
+    <p>
+      Northstar Retail Co. Support Deflection MVP.
+      This prototype demonstrates a self-service returns and refunds page
+      with required questions, controls, validation, escalation, and demo
+      decision traceability.
+    </p>
+
+  </footer>
+
+
+  <!--
+    IMPORTANT:
+    JavaScript is loaded from:
+    js/app.js
+
+    "defer" ensures the HTML is loaded before JavaScript executes.
+  -->
+
+  <script src="js/app.js" defer></script>
+
+</body>
+</html>
